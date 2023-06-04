@@ -1,0 +1,44 @@
+:root {
+  --progress-percent: 16.6%;
+}
+
+.pass-generator-component {
+  & &__length-range {
+    input[type="range"] {
+      position: relative;
+      appearance: none;
+      width: 100%;
+      cursor: pointer;
+      transition: 0.2s;
+      outline: none;
+      background: linear-gradient(
+        to right,
+        var(--color-secondary) var(--progress-percent),
+        var(--color-white-200) var(--progress-percent)
+      );
+      border-radius: 12px;
+    }
+
+    input[type="range"]::-webkit-slider-runnable-track {
+      height: 4px;
+      appearance: none;
+      outline: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      position: relative;
+      appearance: none;
+      outline: none;
+      width: 20px;
+      height: 20px;
+      z-index: 3;
+      border-radius: 40px;
+      background: var(--color-secondary);
+      border: 5px solid var(--color-on-surface);
+      box-shadow: 1px 2px 2px #d4cfcf;
+      margin-top: calc(
+        max((4px - 1px - 1px) * 0.5, 0px) - max(20px * 0.5, 5px)
+      );
+    }
+  }
+}
