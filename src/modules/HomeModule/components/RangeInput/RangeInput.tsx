@@ -23,10 +23,6 @@ export const RangeInput: React.FC<RangeInputProps> = ({
 
     const progress = (newValue / max) * 100;
     input?.style.setProperty("--progress-percent", `${progress}%`);
-
-    const newPasswordLenght = newValue;
-    
-    // console.log(newPasswordLenght);
   };
 
   return (
