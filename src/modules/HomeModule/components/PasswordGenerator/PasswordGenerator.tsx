@@ -6,32 +6,38 @@ import { RangeInput } from "../RangeInput/RangeInput";
 export const PasswordGenerator: React.FC = () => {
   const minPasswordLength = 4;
 
-  const [progress, setProgress] = useState<number>(6 - minPasswordLength);
-  const [includeUppercase, setIncludeUppercase] = useState<boolean>(true);
-  const [includeLowercase, setIncludeLowercase] = useState<boolean>(false);
-  const [includeNumbers, setIncludeNumbers] = useState<boolean>(true);
-  const [includeSymbols, setIncludeSymbols] = useState<boolean>(true);
-  const [generatedPassword, setGeneratedPassword] = useState<string>(" ");
-  const [isCopied, setIsCopied] = useState(false);
+  const [state, setState] = useState({
+    progress: 6 - minPasswordLength,
+    includeUppercase: true,
+    includeLowercase: false,
+    includeNumbers: true,
+    includeSymbols: true,
+    generatedPassword: " ",
+    isCopied: false,
+  });
+
 
   const passwordStrength = calculatePasswordStrength();
 
   /// nasłuchuje zmiennych, które wpływają na hasło
   ///
   useEffect(() => {
-    generatePassword(progress + minPasswordLength);
+    generatePassword(state.progress + minPasswordLength);
   }, [
-    progress,
-    includeUppercase,
-    includeLowercase,
-    includeNumbers,
-    includeSymbols,
+    state.progress,
+    state.includeUppercase,
+    state.includeLowercase,
+    state.includeNumbers,
+    state.includeSymbols,
   ]);
 
   /// operuje na suwaku range, ustawiając długość hasła
   ///
   const handleProgressChange = (value: number) => {
-    setProgress(value);
+    setState((prevState) => ({
+      ...prevState,
+      progress: value,
+    }));
   };
 
   /// kopiuję hasło do schowka, zmienia text btn
@@ -39,55 +45,53 @@ export const PasswordGenerator: React.FC = () => {
 
   const handleClickCopy = () => {
     const textField = document.createElement("textarea");
-    textField.innerText = generatedPassword;
+    textField.value = state.generatedPassword;
     document.body.appendChild(textField);
     textField.select();
     document.execCommand("copy");
     textField.remove();
 
-    setIsCopied(true);
+    setState((prevState) => ({
+      ...prevState,
+      isCopied: true,
+    }));
 
     setTimeout(() => {
-      setIsCopied(false);
+      setState((prevState) => ({
+        ...prevState,
+        isCopied: false,
+      }));
     }, 2000);
   };
 
   const generatePassword = (passwordLenght: number) => {
     let charset = " ";
-    if (includeUppercase) charset += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    if (includeLowercase) charset += "abcdefghijklmnopqrstuvwxyz";
-    if (includeNumbers) charset += "0123456789";
-    if (includeSymbols) charset += "!@#$%^&*()_+~|}{[]:;?><,./-=";
+    if (state.includeUppercase) charset += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    if (state.includeLowercase) charset += "abcdefghijklmnopqrstuvwxyz";
+    if (state.includeNumbers) charset += "0123456789";
+    if (state.includeSymbols) charset += "!@#$%^&*()_+~|}{[]:;?><,./-=";
 
     let generatedPassword = "";
     for (let i = 0; i < passwordLenght; i++) {
       const randomIndex = Math.floor(Math.random() * charset.length);
       generatedPassword += charset[randomIndex];
     }
-    setGeneratedPassword(generatedPassword);
+    setState((prevState) => ({
+      ...prevState,
+      generatedPassword: generatedPassword,
+    }));
   };
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
-    switch (name) {
-      case "includeUppercase":
-        setIncludeUppercase(checked);
-        break;
-      case "includeLowercase":
-        setIncludeLowercase(checked);
-        break;
-      case "includeNumbers":
-        setIncludeNumbers(checked);
-        break;
-      case "includeSymbols":
-        setIncludeSymbols(checked);
-        break;
-      default:
-        break;
-    }
+    setState((prevState) => ({
+      ...prevState,
+      [name]: checked,
+    }))
   };
 
   function calculatePasswordStrength() {
+    const { includeUppercase, includeLowercase, includeNumbers, includeSymbols } = state;
     const strengthFactors = [
       includeUppercase,
       includeLowercase,
@@ -95,7 +99,7 @@ export const PasswordGenerator: React.FC = () => {
       includeSymbols,
     ];
     const strength = strengthFactors.filter((factor) => factor).length;
-    const lengthStrength = Math.floor((progress + minPasswordLength) / 12);
+    const lengthStrength = Math.floor((state.progress + minPasswordLength) / 12);
     return strength + lengthStrength;
   }
 
@@ -120,12 +124,12 @@ export const PasswordGenerator: React.FC = () => {
               Character Lenght
             </div>
             <div className="pass-generator-component__length-number">
-              {progress + minPasswordLength}
+              {state.progress + minPasswordLength}
             </div>
           </div>
           <div className="pass-generator-component__length-range">
             <RangeInput
-              value={progress}
+              value={state.progress}
               min={0}
               max={16 - minPasswordLength}
               onChange={handleProgressChange}
@@ -139,7 +143,7 @@ export const PasswordGenerator: React.FC = () => {
                 className="pass-generator-component__checkbox"
                 type="checkbox"
                 name="includeUppercase"
-                checked={includeUppercase}
+                checked={state.includeUppercase}
                 onChange={handleCheckboxChange}
               />
               <div className="pass-generator-component__choose-label">
@@ -151,7 +155,7 @@ export const PasswordGenerator: React.FC = () => {
                 className="pass-generator-component__checkbox"
                 type="checkbox"
                 name="includeLowercase"
-                checked={includeLowercase}
+                checked={state.includeLowercase}
                 onChange={handleCheckboxChange}
               />
               <div className="pass-generator-component__choose-label">
@@ -165,7 +169,7 @@ export const PasswordGenerator: React.FC = () => {
                 className="pass-generator-component__checkbox"
                 type="checkbox"
                 name="includeNumbers"
-                checked={includeNumbers}
+                checked={state.includeNumbers}
                 onChange={handleCheckboxChange}
               />
               <div className="pass-generator-component__choose-label">
@@ -177,7 +181,7 @@ export const PasswordGenerator: React.FC = () => {
                 className="pass-generator-component__checkbox"
                 type="checkbox"
                 name="includeSymbols"
-                checked={includeSymbols}
+                checked={state.includeSymbols}
                 onChange={handleCheckboxChange}
               />
               <div className="pass-generator-component__choose-label">
@@ -218,11 +222,11 @@ export const PasswordGenerator: React.FC = () => {
         </div>
         <div className="pass-generator-component__output">
           <div className="pass-generator-component__output-value">
-            {generatedPassword}
+            {state.generatedPassword}
           </div>
           <div
             className="image-container"
-            onClick={() => generatePassword(progress + minPasswordLength)}
+            onClick={() => generatePassword(state.progress + minPasswordLength)}
           >
             <img src="/refresh.svg" alt="refresh icon" />
           </div>
@@ -231,7 +235,7 @@ export const PasswordGenerator: React.FC = () => {
           className="pass-generator-component__button"
           onClick={handleClickCopy}
         >
-          {isCopied ? (
+          {state.isCopied ? (
             <div className="text">Copied!</div>
           ) : (
             <>
