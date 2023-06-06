@@ -1,0 +1,55 @@
+:root {
+  --checkbox-size: 18px;
+}
+
+.pass-generator-component {
+  & &__radio-container {
+    color: var(--color-white-500);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 19px;
+    letter-spacing: -0.02em;
+  }
+
+  & &__choose-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 14px;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    label {
+      opacity: .9;
+      cursor: pointer;
+      transition: .2s;
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  & &__checkbox {
+    cursor: pointer;
+    appearance: none;
+    height: var(--checkbox-size);
+    width: var(--checkbox-size);
+    border-radius: 6px;
+    border: 1px solid var(--color-white-500);
+    background: var(--color-white-100) url(/check-mark.svg) no-repeat center;
+    opacity: .8;
+    transition: 0.2s;
+
+    &:checked {
+      background-color: var(--color-secondary);
+      border: none;
+    }
+
+    &:hover {
+      box-shadow: inset 0px 0px 6px 0px var(--color-secondary);
+      opacity: 1;
+    }
+  }
+}

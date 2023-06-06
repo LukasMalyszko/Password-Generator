@@ -26,7 +26,6 @@ export const RangeInput: React.FC<RangeInputProps> = ({
   };
 
   return (
-    <>
       <input
         ref={inputRef}
         type="range"
@@ -35,7 +34,6 @@ export const RangeInput: React.FC<RangeInputProps> = ({
         max={max}
         onChange={handleChange}
       />
-    </>
   );
 };
 

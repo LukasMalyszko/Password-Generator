@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./PasswordGenerator.scss";
 import "../RangeInput/RangeInput.scss";
+import "../CheckboxLabel/CheckboxLabel.scss";
 import { RangeInput } from "../RangeInput/RangeInput";
+import { CheckboxLabel } from "../CheckboxLabel/CheckboxLabel";
 
 export const PasswordGenerator: React.FC = () => {
   const minPasswordLength = 4;
@@ -59,12 +61,12 @@ export const PasswordGenerator: React.FC = () => {
   };
 
   const generatePassword = (passwordLenght: number) => {
-    let charset = "_"; 
+    let charset = "_";
     if (state.includeUppercase) charset += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     if (state.includeLowercase) charset += "abcdefghijklmnopqrstuvwxyz";
     if (state.includeNumbers) charset += "0123456789";
     if (state.includeSymbols) charset += "!@#$%^&*()_+~|}{[]:;?><,./-=";
-    
+
     let generatedPassword = "";
     for (let i = 0; i < passwordLenght; i++) {
       const randomIndex = Math.floor(Math.random() * charset.length);
@@ -73,12 +75,10 @@ export const PasswordGenerator: React.FC = () => {
     setState((prevState) => ({
       ...prevState,
       generatedPassword: generatedPassword,
-      
     }));
   };
 
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = e.target;
+  const handleCheckboxChange = (name: string, checked: boolean) => {
     setState((prevState) => ({
       ...prevState,
       [name]: checked,
@@ -128,72 +128,36 @@ export const PasswordGenerator: React.FC = () => {
       </div>
       <div className="pass-generator-component__radio-container">
         <div className="pass-generator-component__radio-section">
-          <div className="pass-generator-component__choose-container">
-            <input
-              id="uppercase"
-              className="pass-generator-component__checkbox"
-              type="checkbox"
-              name="includeUppercase"
-              checked={state.includeUppercase}
-              onChange={handleCheckboxChange}
-            />
-            <label
-              htmlFor="uppercase"
-              className="pass-generator-component__choose-label"
-            >
-              Include Uppercase Letter
-            </label>
-          </div>
-          <div className="pass-generator-component__choose-container">
-            <input
-              id="lowercase"
-              className="pass-generator-component__checkbox"
-              type="checkbox"
-              name="includeLowercase"
-              checked={state.includeLowercase}
-              onChange={handleCheckboxChange}
-            />
-            <label
-              htmlFor="lowercase"
-              className="pass-generator-component__choose-label"
-            >
-              Include Lowercase Letter
-            </label>
-          </div>
+          <CheckboxLabel
+            id="uppercase"
+            name="includeUppercase"
+            checked={state.includeUppercase}
+            onChange={handleCheckboxChange}
+            label="Include Uppercase Letter"
+          />
+          <CheckboxLabel
+            id="lowercase"
+            name="includeLowercase"
+            checked={state.includeLowercase}
+            onChange={handleCheckboxChange}
+            label="Include Lowercase Letter"
+          />
         </div>
         <div className="pass-generator-component__radio-section">
-          <div className="pass-generator-component__choose-container">
-            <input
-              id="numbers"
-              className="pass-generator-component__checkbox"
-              type="checkbox"
-              name="includeNumbers"
-              checked={state.includeNumbers}
-              onChange={handleCheckboxChange}
-            />
-            <label
-              htmlFor="numbers"
-              className="pass-generator-component__choose-label"
-            >
-              Include Numbers
-            </label>
-          </div>
-          <div className="pass-generator-component__choose-container">
-            <input
-              id="symbols"
-              className="pass-generator-component__checkbox"
-              type="checkbox"
-              name="includeSymbols"
-              checked={state.includeSymbols}
-              onChange={handleCheckboxChange}
-            />
-            <label
-              htmlFor="symbols"
-              className="pass-generator-component__choose-label"
-            >
-              Include Symbols
-            </label>
-          </div>
+          <CheckboxLabel
+            id="numbers"
+            name="includeNumbers"
+            checked={state.includeNumbers}
+            onChange={handleCheckboxChange}
+            label="Include Numbers"
+          />
+          <CheckboxLabel
+            id="symbols"
+            name="includeSymbols"
+            checked={state.includeSymbols}
+            onChange={handleCheckboxChange}
+            label="Include Symbols"
+          />
         </div>
       </div>
       <div className="pass-generator-component__strenght-container">
