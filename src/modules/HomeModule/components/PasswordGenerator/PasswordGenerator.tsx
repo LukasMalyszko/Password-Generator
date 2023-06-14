@@ -175,36 +175,36 @@ export const PasswordGenerator: React.FC = () => {
           <div
             className={`bar ${
               passwordStrength > 3
-                ? "green-bar"
+                ? "bar--green"
                 : passwordStrength > 2
-                ? "yellow-bar"
+                ? "bar--yellow"
                 : passwordStrength <= 2
-                ? "red-bar"
+                ? "bar--red"
                 : ""
             }`}
           ></div>
           <div
             className={`bar ${
               passwordStrength > 3
-                ? "green-bar"
+                ? "bar--green"
                 : passwordStrength > 2
-                ? "yellow-bar"
+                ? "bar--yellow"
                 : passwordStrength === 2
-                ? "red-bar"
+                ? "bar--red"
                 : ""
             }`}
           ></div>
           <div
             className={`bar ${
               passwordStrength > 3
-                ? "green-bar"
+                ? "bar--green"
                 : passwordStrength > 2
-                ? "yellow-bar"
+                ? "bar--yellow"
                 : ""
             }`}
           ></div>
           <div
-            className={`bar ${passwordStrength > 3 ? "green-bar" : ""}`}
+            className={`bar ${passwordStrength > 3 ? "bar--green" : ""}`}
           ></div>
         </div>
       </div>
@@ -220,7 +220,7 @@ export const PasswordGenerator: React.FC = () => {
         </div>
       </div>
       <button
-        className="pass-generator-component__button"
+        className="pass-generator-component__primary-button"
         onClick={handleClickCopy}
       >
         {state.isCopied ? (
