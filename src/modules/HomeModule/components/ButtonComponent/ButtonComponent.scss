@@ -1,0 +1,24 @@
+.pass-generator-component {
+    & &__primary-button {
+        height: 56px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        color: var(--color-white-100);
+        background-color: var(--color-primary);
+        border: none;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 19px;
+        letter-spacing: -0.02em;
+    
+        &:hover {
+          background-color: var(--color-primary-hover);
+          cursor: pointer;
+          transition: 0.2s;
+        }
+      }
+}
