@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import "./PasswordGenerator.scss";
 import "../RangeInput/RangeInput.scss";
 import "../CheckboxLabel/CheckboxLabel.scss";
+import "../ButtonComponent/ButtonComponent.scss";
 import { RangeInput } from "../RangeInput/RangeInput";
 import { CheckboxLabel } from "../CheckboxLabel/CheckboxLabel";
+import { ButtonComponent } from "../ButtonComponent/ButtonComponent";
 
 export const PasswordGenerator: React.FC = () => {
   const minPasswordLength = 4;
@@ -219,21 +221,7 @@ export const PasswordGenerator: React.FC = () => {
           <img src="/refresh.svg" alt="refresh icon" />
         </div>
       </div>
-      <button
-        className="pass-generator-component__primary-button"
-        onClick={handleClickCopy}
-      >
-        {state.isCopied ? (
-          <div className="text">Copied!</div>
-        ) : (
-          <>
-            <div className="image-container">
-              <img src="/copy-img.svg" alt="copy icon" />
-            </div>
-            <div className="text">Copy Password</div>
-          </>
-        )}
-      </button>
+      <ButtonComponent onClick={handleClickCopy} isCopied={state.isCopied} />
     </div>
   );
 };
